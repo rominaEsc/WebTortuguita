@@ -166,31 +166,6 @@
     96%           { transform: scaleY(0.05); }
   }
 
-  /* Pigtail sway */
-  .pigtail-sway {
-    transform-box: fill-box;
-    transform-origin: 50% 100%;
-    animation-duration: 2.6s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-  }
-  .pigtail-left {
-    animation-name: swayLeft;
-  }
-  .pigtail-right {
-    animation-name: swayRight;
-    animation-delay: 0.3s;
-  }
-  @keyframes swayLeft {
-    0%   { transform: rotate(-5deg); }
-    100% { transform: rotate(6deg); }
-  }
-  @keyframes swayRight {
-    0%   { transform: rotate(5deg); }
-    100% { transform: rotate(-6deg); }
-  }
-
   /* Waving front-right leg */
   .leg-wave {
     transform-box: fill-box;
@@ -205,8 +180,8 @@
   /* Speech bubble */
   .speech-bubble {
     position: absolute;
-    top: -8%;
-    left: 76%;
+    top: -2%;
+    left: 70%;
     background: #ffffff;
     color: #3a7d3a;
     font-family: "Chewy", "Comic Sans MS", cursive, sans-serif;
@@ -308,8 +283,7 @@
   @media (prefers-reduced-motion: reduce) {
     .turtle-wrap,
     .eyelids,
-    .leg-wave,
-    .pigtail-sway {
+    .leg-wave {
       animation: none !important;
     }
     .sign.show {
@@ -336,7 +310,7 @@
 
     <div class="turtle-stage">
       <div class="turtle-wrap">
-        <svg viewBox="0 0 300 320" role="img" aria-label="Tortuguita verde y simpática, con cachetes rosados, dos colitas marrones con gomitas rosadas y un moño rosa con lunares, saludando con su patita delantera">
+        <svg viewBox="0 0 300 320" role="img" aria-label="Tortuguita verde y simpática, con cachetes rosados y un moño rosa con lunares, saludando con su patita delantera">
           <defs>
             <clipPath id="shellClip">
               <ellipse cx="150" cy="178" rx="82" ry="66"></ellipse>
@@ -400,20 +374,8 @@
             <path d="M 122 118 Q 150 138 178 118" fill="none" stroke="#2f6e32" stroke-width="5" stroke-linecap="round"></path>
           </g>
 
-          <!-- Peinado: colitas onduladas y moño -->
+          <!-- Peinado: moño -->
           <g aria-hidden="true">
-            <!-- Colita izquierda -->
-            <g class="pigtail-sway pigtail-left">
-              <path d="M103,70 C85,62 70,50 72,32 C74,18 95,14 103,28 C109,40 106,56 103,70 Z" fill="#c6895a" stroke="#9c6435" stroke-width="3" stroke-linejoin="round"></path>
-              <ellipse cx="101" cy="68" rx="8" ry="5" fill="#ff8fc6" stroke="#e0488f" stroke-width="2" transform="rotate(-20 101 68)"></ellipse>
-            </g>
-
-            <!-- Colita derecha -->
-            <g class="pigtail-sway pigtail-right">
-              <path d="M197,70 C215,62 230,50 228,32 C226,18 205,14 197,28 C191,40 194,56 197,70 Z" fill="#c6895a" stroke="#9c6435" stroke-width="3" stroke-linejoin="round"></path>
-              <ellipse cx="199" cy="68" rx="8" ry="5" fill="#ff8fc6" stroke="#e0488f" stroke-width="2" transform="rotate(20 199 68)"></ellipse>
-            </g>
-
             <!-- Tiritas colgantes del moño -->
             <path d="M145,42 L138,60 L146,56 L150,42 Z" fill="#ff2d78" stroke="#c2004f" stroke-width="2" stroke-linejoin="round"></path>
             <path d="M155,42 L162,60 L154,56 L150,42 Z" fill="#ff2d78" stroke="#c2004f" stroke-width="2" stroke-linejoin="round"></path>
