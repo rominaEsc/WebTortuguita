@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Hola! Soy Tortuguita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chewy&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky-top: #8fd9f7;
+    --sky-bottom: #c7ecfb;
+    --water: #6fc8e0;
+    --water-dark: #4fb3cf;
+    --grass: #7fd37f;
+    --grass-dark: #5bb85b;
+    --coral: #ff7a66;
+    --coral-dark: #e8604d;
+    --shell-light: #4fb85c;
+    --shell-dark: #2f9b45;
+    --skin-light: #8ee28f;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: "Nunito", "Trebuchet MS", sans-serif;
+    background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-bottom) 55%);
+    position: relative;
+  }
+
+  .scenery {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .water {
+    position: absolute;
+    bottom: 22vh;
+    left: 0;
+    right: 0;
+    height: 14vh;
+    background: linear-gradient(to bottom, var(--water), var(--water-dark));
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+
+  .grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24vh;
+    background: linear-gradient(to bottom, var(--grass), var(--grass-dark));
+    border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+  }
+
+  .sun {
+    position: fixed;
+    top: 6%;
+    right: 8%;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff6b0, #ffd93d);
+    box-shadow: 0 0 30px 6px rgba(255, 217, 61, 0.6);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .cloud {
+    position: fixed;
+    background: #ffffff;
+    border-radius: 50px;
+    opacity: 0.9;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .cloud::before, .cloud::after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+  }
+  .cloud-1 {
+    top: 12%;
+    left: 8%;
+    width: 90px;
+    height: 32px;
+  }
+  .cloud-1::before { width: 46px; height: 46px; top: -22px; left: 10px; }
+  .cloud-1::after { width: 34px; height: 34px; top: -14px; left: 48px; }
+  .cloud-2 {
+    top: 20%;
+    left: 60%;
+    width: 70px;
+    height: 26px;
+  }
+  .cloud-2::before { width: 36px; height: 36px; top: -16px; left: 8px; }
+  .cloud-2::after { width: 26px; height: 26px; top: -10px; left: 38px; }
+
+  main {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6vh 16px 4vh;
+    gap: clamp(16px, 4vh, 36px);
+  }
+
+  .turtle-stage {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .turtle-wrap {
+    width: min(70vw, 320px);
+    animation: floatTurtle 3.2s ease-in-out infinite alternate;
+  }
+
+  .turtle-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @keyframes floatTurtle {
+    0%   { transform: translateY(0px); }
+    100% { transform: translateY(-14px); }
+  }
+
+  /* Blinking eyelids */
+  .eyelids {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blink 5s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 88%, 100% { transform: scaleY(0.05); }
+    90%           { transform: scaleY(1); }
+    92%           { transform: scaleY(0.05); }
+    94%           { transform: scaleY(1); }
+    96%           { transform: scaleY(0.05); }
+  }
+
+  /* Waving front-right leg */
+  .leg-wave {
+    transform-box: fill-box;
+    transform-origin: 85% 15%;
+    animation: wave 1.3s ease-in-out infinite alternate;
+  }
+  @keyframes wave {
+    0%   { transform: rotate(-8deg); }
+    100% { transform: rotate(32deg); }
+  }
+
+  /* Speech bubble */
+  .speech-bubble {
+    position: absolute;
+    top: 2%;
+    left: 68%;
+    background: #ffffff;
+    color: #3a7d3a;
+    font-family: "Chewy", "Comic Sans MS", cursive, sans-serif;
+    font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+    padding: 10px 22px;
+    border-radius: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+  }
+  .speech-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 24px;
+    border-width: 12px 10px 0 0;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+  }
+
+  h1 {
+    font-family: "Chewy", "Comic Sans MS", cursive, sans-serif;
+    color: #2f6e32;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    text-align: center;
+    margin: 0;
+    text-shadow: 1px 2px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .poke-button {
+    font-family: "Chewy", "Comic Sans MS", cursive, sans-serif;
+    font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+    color: #ffffff;
+    background: linear-gradient(to bottom, var(--coral), var(--coral-dark));
+    border: none;
+    border-radius: 999px;
+    padding: clamp(14px, 2.4vh, 20px) clamp(36px, 6vw, 56px);
+    cursor: pointer;
+    box-shadow: 0 8px 0 #c94a39, 0 12px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    touch-action: manipulation;
+  }
+  .poke-button:hover {
+    filter: brightness(1.05);
+  }
+  .poke-button:active {
+    transform: translateY(6px);
+    box-shadow: 0 2px 0 #c94a39, 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  .poke-button:focus-visible {
+    outline: 4px solid #ffe066;
+    outline-offset: 4px;
+  }
+
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .sign {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 6;
+    pointer-events: none;
+    background: #ffe066;
+    color: #8a5a00;
+    font-family: "Chewy", "Comic Sans MS", cursive, sans-serif;
+    font-size: clamp(1.6rem, 6vw, 3rem);
+    text-align: center;
+    padding: 20px 36px;
+    border-radius: 22px;
+    border: 6px solid #ffffff;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    max-width: 85vw;
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-6deg) scale(0.4);
+    transition: opacity 0.35s ease;
+  }
+  .sign.show {
+    opacity: 1;
+    animation: signBounce 0.6s cubic-bezier(.34, 1.8, .64, 1) forwards;
+  }
+  @keyframes signBounce {
+    0%   { transform: translate(-50%, -50%) rotate(-6deg) scale(0.3); }
+    55%  { transform: translate(-50%, -50%) rotate(-6deg) scale(1.15); }
+    75%  { transform: translate(-50%, -50%) rotate(-6deg) scale(0.92); }
+    100% { transform: translate(-50%, -50%) rotate(-6deg) scale(1); }
+  }
+
+  footer {
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .turtle-wrap,
+    .eyelids,
+    .leg-wave {
+      animation: none !important;
+    }
+    .sign.show {
+      animation: none !important;
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(-6deg) scale(1);
+      transition: opacity 0.3s ease;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="scenery" aria-hidden="true">
+    <div class="water"></div>
+    <div class="grass"></div>
+  </div>
+  <div class="sun" aria-hidden="true"></div>
+  <div class="cloud cloud-1" aria-hidden="true"></div>
+  <div class="cloud cloud-2" aria-hidden="true"></div>
+
+  <main>
+    <h1>¡Hola, soy Tortuguita!</h1>
+
+    <div class="turtle-stage">
+      <div class="turtle-wrap">
+        <svg viewBox="0 0 300 320" role="img" aria-label="Tortuguita verde y simpática, con cachetes rosados, saludando con su patita delantera">
+          <defs>
+            <clipPath id="shellClip">
+              <ellipse cx="150" cy="178" rx="82" ry="66"></ellipse>
+            </clipPath>
+          </defs>
+
+          <!-- Tail -->
+          <ellipse cx="150" cy="255" rx="10" ry="14" fill="#6fcf72"></ellipse>
+
+          <!-- Back legs -->
+          <ellipse cx="82" cy="228" rx="22" ry="16" fill="#6fcf72" transform="rotate(-20 82 228)"></ellipse>
+          <ellipse cx="218" cy="228" rx="22" ry="16" fill="#6fcf72" transform="rotate(20 218 228)"></ellipse>
+
+          <!-- Front-left leg (static) -->
+          <ellipse cx="88" cy="178" rx="24" ry="17" fill="#6fcf72" transform="rotate(-12 88 178)"></ellipse>
+
+          <!-- Shell -->
+          <g>
+            <ellipse cx="150" cy="178" rx="82" ry="66" fill="var(--shell-light)" stroke="var(--shell-dark)" stroke-width="4"></ellipse>
+            <g clip-path="url(#shellClip)" fill="none" stroke="var(--shell-dark)" stroke-width="3" stroke-linejoin="round">
+              <polygon points="150,114 163.9,122 163.9,138 150,146 136.1,138 136.1,122"></polygon>
+              <polygon points="120,135 133,142.5 133,157.5 120,165 107,157.5 107,142.5"></polygon>
+              <polygon points="180,135 193,142.5 193,157.5 180,165 167,157.5 167,142.5"></polygon>
+              <polygon points="150,155 164.7,163.5 164.7,180.5 150,189 135.3,180.5 135.3,163.5"></polygon>
+              <polygon points="116,171 128.1,178 128.1,192 116,199 103.9,192 103.9,178"></polygon>
+              <polygon points="184,171 196.1,178 196.1,192 184,199 171.9,192 171.9,178"></polygon>
+              <polygon points="150,197 163,204.5 163,219.5 150,227 137,219.5 137,204.5"></polygon>
+            </g>
+          </g>
+
+          <!-- Front-right leg (waving) -->
+          <g class="leg-wave">
+            <ellipse cx="212" cy="178" rx="24" ry="17" fill="#6fcf72"></ellipse>
+          </g>
+
+          <!-- Head -->
+          <g>
+            <circle cx="150" cy="95" r="56" fill="var(--skin-light)" stroke="#4fb356" stroke-width="3"></circle>
+
+            <!-- Cheeks -->
+            <circle cx="110" cy="112" r="13" fill="#ffb3c6" opacity="0.75"></circle>
+            <circle cx="190" cy="112" r="13" fill="#ffb3c6" opacity="0.75"></circle>
+
+            <!-- Eyes -->
+            <g>
+              <ellipse cx="125" cy="85" rx="18" ry="20" fill="#ffffff"></ellipse>
+              <ellipse cx="175" cy="85" rx="18" ry="20" fill="#ffffff"></ellipse>
+              <circle cx="128" cy="90" r="8" fill="#3a2a1a"></circle>
+              <circle cx="178" cy="90" r="8" fill="#3a2a1a"></circle>
+              <circle cx="124.5" cy="85.5" r="3" fill="#ffffff"></circle>
+              <circle cx="174.5" cy="85.5" r="3" fill="#ffffff"></circle>
+            </g>
+
+            <!-- Eyelids (for blinking) -->
+            <g class="eyelids" fill="var(--skin-light)">
+              <ellipse cx="125" cy="85" rx="18" ry="20"></ellipse>
+              <ellipse cx="175" cy="85" rx="18" ry="20"></ellipse>
+            </g>
+
+            <!-- Mouth -->
+            <path d="M 122 118 Q 150 138 178 118" fill="none" stroke="#2f6e32" stroke-width="5" stroke-linecap="round"></path>
+          </g>
+        </svg>
+      </div>
+
+      <div class="speech-bubble">¡Hola!</div>
+    </div>
+
+    <button id="turtleButton" class="poke-button" type="button">¡Apretame!</button>
+  </main>
+
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <div id="sign" class="sign" aria-live="polite">¡Eres increíble!</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var isReducedMotion = reducedMotionQuery.matches;
+
+  /* ---------- Confetti ---------- */
+  var canvas = document.getElementById("confetti-canvas");
+  var ctx = canvas.getContext("2d");
+  var particles = [];
+  var rafId = null;
+
+  var colors = ["#ff6b6b", "#ffd93d", "#6bcb77", "#4d96ff", "#ff9f45", "#c68fff", "#ff6fb5", "#4ecdc4"];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  function spawnConfetti() {
+    var count = isReducedMotion ? 28 : 140;
+    var w = canvas.width;
+    var h = canvas.height;
+
+    for (var i = 0; i < count; i++) {
+      var fromLeft = i % 2 === 0;
+      particles.push({
+        x: fromLeft ? -10 : w + 10,
+        y: Math.random() * h * 0.45,
+        vx: (fromLeft ? 1 : -1) * (3 + Math.random() * 4),
+        vy: -(2 + Math.random() * 4),
+        gravity: 0.15 + Math.random() * 0.12,
+        size: 6 + Math.random() * 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 14,
+        life: 0
+      });
+    }
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateConfetti);
+    }
+  }
+
+  function updateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.vy += p.gravity;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+      p.life++;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rotation * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+      ctx.restore();
+    }
+
+    particles = particles.filter(function (p) {
+      return p.y < canvas.height + 40 && p.life < 420;
+    });
+
+    if (particles.length > 0) {
+      rafId = requestAnimationFrame(updateConfetti);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      rafId = null;
+    }
+  }
+
+  /* ---------- Sign ---------- */
+  var sign = document.getElementById("sign");
+  var signTimeout = null;
+
+  function showSign() {
+    sign.classList.remove("show");
+    // Force reflow so the entrance animation restarts on repeated clicks.
+    void sign.offsetWidth;
+    sign.classList.add("show");
+
+    clearTimeout(signTimeout);
+    signTimeout = setTimeout(function () {
+      sign.classList.remove("show");
+    }, 3000);
+  }
+
+  /* ---------- Button ---------- */
+  var button = document.getElementById("turtleButton");
+  button.addEventListener("click", function () {
+    spawnConfetti();
+    showSign();
+  });
+
+  reducedMotionQuery.addEventListener("change", function (e) {
+    isReducedMotion = e.matches;
+  });
+})();
+</script>
+</body>
+</html>
